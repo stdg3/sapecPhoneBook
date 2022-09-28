@@ -5,15 +5,13 @@
 }
 
 <h1>Details</h1>
-<p>
-    <a class="btn btn-success" asp-action="">Add Number</a>
-</p>
+
 <div>
     <h4>Contact</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ContactFirstName)
+            @Html.DisplayNameFor(model => model.ContactLastName)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ContactFirstName)
@@ -25,15 +23,14 @@
             @Html.DisplayFor(model => model.ContactLastName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ContactAdress)
+            @*@Html.DisplayNameFor(model => model.NumbersOfContact.PhoneType)*@
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ContactAdress)
+            @*@Html.DisplayFor(model => model.NumbersOfContact.PhoneType.PhoneTypeName)*@
         </dd>
     </dl>
 </div>
 <div>
-    <a class="btn btn-primary" asp-action="Index">Back to List</a>
-    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.ContactId">Edit</a>
-    <a class="btn btn-danger"  asp-action="Delete" asp-route-id="@Model?.ContactId">Delete</a>
+    <a asp-action="Edit" asp-route-id="@Model?.ContactId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
 </div>

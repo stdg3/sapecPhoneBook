@@ -19,6 +19,26 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/ContactsEx/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdHNFeFxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/ContactsEx/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdHNFeFxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/ContactsEx/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdHNFeFxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/ContactsEx/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdHNFeFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/ContactsEx/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdHNFeFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/Contacts/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdHNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -45,6 +65,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/NumbersOfContacts/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVtYmVyc09mQ29udGFjdHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/NumbersOfContacts/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVtYmVyc09mQ29udGFjdHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/NumbersOfContacts/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVtYmVyc09mQ29udGFjdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/NumbersOfContacts/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVtYmVyc09mQ29udGFjdHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/NumbersOfContacts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVtYmVyc09mQ29udGFjdHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/avelicoglo/Desktop/internProjects/asp6Denemeler/test/test/Views/PhoneTypes/Create.cshtml]

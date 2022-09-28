@@ -1,4 +1,4 @@
-﻿@model test.ViewModel.EditViewModel
+﻿@model test.ViewModel.EditContactViewMoodel
 
 @{
     ViewData["Title"] = "Edit";
@@ -14,30 +14,28 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ContactId" />
             <div class="form-group">
-                <label asp-for="ContactName" class="control-label"></label>
-                <input asp-for="ContactName" class="form-control" />
-                <span asp-validation-for="ContactName" class="text-danger"></span>
+                <label asp-for="ContactFirstName" class="control-label"></label>
+                <input asp-for="ContactFirstName" class="form-control" />
+                <span asp-validation-for="ContactFirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ContactNumber" class="control-label"></label>
-                <input asp-for="ContactNumber" class="form-control" />
-                <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                <label asp-for="ContactLastName" class="control-label"></label>
+                <input asp-for="ContactLastName" class="form-control" />
+                <span asp-validation-for="ContactLastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SelectedTypeId" class="control-label"></label>
-                <select asp-for="SelectedTypeId" class="form-control" asp-items="@Model.PhoneTypesSelectedList"></select>
-                <span asp-validation-for="SelectedTypeId" class="text-danger"></span>
+                <label asp-for="ContactAdress" class="control-label"></label>
+                <input asp-for="ContactAdress" class="form-control" />
+                <span asp-validation-for="ContactAdress" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-success" />
+                <a class="btn btn-primary" asp-action="Index">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

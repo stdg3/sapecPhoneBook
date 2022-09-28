@@ -12,5 +12,6 @@ namespace test.Data
         }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<PhoneType> PhoneTypes { get; set; }
+        public DbSet<NumbersOfContact> NumbersOfNumbers { get; set; }
     }
 }

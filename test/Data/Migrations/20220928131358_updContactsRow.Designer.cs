@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using test.Data;
 
@@ -11,9 +12,10 @@ using test.Data;
 namespace test.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220928131358_updContactsRow")]
+    partial class updContactsRow
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,11 +244,16 @@ namespace test.Data.Migrations
                     b.Property<string>("ContactLastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("NumbersOfContactId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ContactId");
+
+                    b.HasIndex("NumbersOfContactId");
 
                     b.HasIndex("UserId");
 
@@ -261,9 +268,6 @@ namespace test.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NumbersOfContactId"), 1L, 1);
 
-                    b.Property<int>("ContactId")
-                        .HasColumnType("int");
-
                     b.Property<string>("NumbersOfContactNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -271,8 +275,6 @@ namespace test.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("NumbersOfContactId");
-
-                    b.HasIndex("ContactId");
 
                     b.HasIndex("PhoneTypeId");
 
@@ -348,30 +350,30 @@ namespace test.Data.Migrations
 
             modelBuilder.Entity("test.Models.Contact", b =>
                 {
+                    b.HasOne("test.Models.NumbersOfContact", "NumbersOfContact")
+                        .WithMany("Contacts")
+                        .HasForeignKey("NumbersOfContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("test.Models.ApplicationUser", "User")
                         .WithMany("MyContact")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("NumbersOfContact");
+
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("test.Models.NumbersOfContact", b =>
                 {
-                    b.HasOne("test.Models.Contact", "Contact")
-                        .WithMany("NumbersOfContacts")
-                        .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("test.Models.PhoneType", "PhoneType")
                         .WithMany("NumberOfContacts")
                         .HasForeignKey("PhoneTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Contact");
 
                     b.Navigation("PhoneType");
                 });
@@ -381,9 +383,9 @@ namespace test.Data.Migrations
                     b.Navigation("MyContact");
                 });
 
-            modelBuilder.Entity("test.Models.Contact", b =>
+            modelBuilder.Entity("test.Models.NumbersOfContact", b =>
                 {
-                    b.Navigation("NumbersOfContacts");
+                    b.Navigation("Contacts");
                 });
 
             modelBuilder.Entity("test.Models.PhoneType", b =>

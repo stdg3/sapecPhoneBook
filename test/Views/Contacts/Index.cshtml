@@ -7,19 +7,19 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-success" asp-action="Create">Create New Contact</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ContactName)
+                @Html.DisplayNameFor(model => model.ContactFirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ContactNumber)
+                @Html.DisplayNameFor(model => model.ContactLastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhoneType)
+                @Html.DisplayNameFor(model => model.ContactAdress)
             </th>
             <th></th>
         </tr>
@@ -28,18 +28,18 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ContactName)
+                @Html.DisplayFor(modelItem => item.ContactFirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ContactNumber)
+                @Html.DisplayFor(modelItem => item.ContactLastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PhoneType.PhoneTypeName)
+                @Html.DisplayFor(modelItem => item.ContactAdress)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ContactId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ContactId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ContactId">Delete</a>
+                @*<a asp-action="Edit" asp-route-id="@item.ContactId">Edit</a>*@
+                    <a class="btn btn-info float-end" asp-action="Details" asp-route-id="@item.ContactId">Details</a>
+                @*<a asp-action="Delete" asp-route-id="@item.ContactId">Delete</a>*@
             </td>
         </tr>
 }

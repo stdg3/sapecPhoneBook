@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,25 +14,24 @@ using test.ViewModel;
 
 namespace test.Controllers
 {
-    public class ContactsController : Controller
+    [Authorize]
+    public class ContactsExController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ContactsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public ContactsExController(ApplicationDbContext context, UserManager<ApplicationUser> usermanager)
         {
             _context = context;
-            _userManager = userManager;
+            _userManager = usermanager;
         }
 
         // GET: Contacts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Contacts.Include(c => c.User);
-            //ListContactViewMoodel existContact = new ListContactViewMoodel
-            //{
-            //    ContactId = 
-            //};
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var applicationDbContext = _context.Contacts.Include(c => c.User).Where
+                (c => c.UserId==user.Id);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -43,6 +44,7 @@ namespace test.Controllers
             }
 
             var contact = await _context.Contacts
+                //.Include(c => c.PhoneType)
                 .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.ContactId == id);
             if (contact == null)
@@ -56,10 +58,14 @@ namespace test.Controllers
         // GET: Contacts/Create
         public IActionResult Create()
         {
-            //var applicationDbContext = _context.PhoneTypes.ToList();
-            //var model = new CreateContactViewModel();
-            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
+            var applicationDbContext = _context.PhoneTypes.ToList();
+            var model = new CreateViewModel();
+            model.PhoneTypesSelectedList = new List<SelectListItem>();
+            foreach (var item in applicationDbContext)
+            {
+                model.PhoneTypesSelectedList.Add(new SelectListItem { Text = item.PhoneTypeName, Value = item.PhoneTypeId.ToString() });
+            }
+            return View(model);
         }
 
         // POST: Contacts/Create
@@ -67,23 +73,26 @@ namespace test.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateContactViewModel inputContact)
+        public async Task<IActionResult> Create(CreateViewModel input)
         {
+
             if (ModelState.IsValid)
             {
-                var userAuthorized = await _userManager.GetUserAsync(HttpContext.User);
-                Contact newContact = new Contact 
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                Contact newContact = new Contact
                 {
-                    ContactFirstName = inputContact.ContactFirstName,
-                    ContactLastName = inputContact.ContactLastName,
-                    ContactAdress = inputContact.ContactAdress,
-                    UserId = userAuthorized?.Id
+                    ContactFirstName = input.ContactName,
+                    //ContactNumber = input.ContactNumber,
+                    UserId = user?.Id,
+                    //PhoneTypeId = input.SelectedTypeId,
                 };
                 _context.Add(newContact);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(inputContact);
+            //ViewData["PhoneTypeId"] = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeId", contact.PhoneTypeId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", contact.UserId);
+            return View(input);     
         }
 
         // GET: Contacts/Edit/5
@@ -99,14 +108,22 @@ namespace test.Controllers
             {
                 return NotFound();
             }
-            EditContactViewMoodel newContact = new EditContactViewMoodel
+            var myList = _context.PhoneTypes.ToList();
+            var existContact = new EditViewModel 
             {
                 ContactId = contact.ContactId,
-                ContactFirstName = contact.ContactFirstName,
-                ContactLastName = contact.ContactLastName,
-                ContactAdress = contact.ContactAdress
+                //ContactName = contact.ContactName,
+                //ContactNumber = contact.NumbersOfContact.NumbersOfContactNumber,
+                //SelectedTypeId = contact.PhoneTypeId,
+                PhoneTypesSelectedList = new List<SelectListItem>()
             };
-            return View(newContact);
+            foreach (var item in myList) 
+            {
+                existContact.PhoneTypesSelectedList.Add(new SelectListItem { Text = item.PhoneTypeName, Value = item.PhoneTypeId.ToString()});
+            }
+            //ViewData["PhoneTypeId"] = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeId", contact.PhoneTypeId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", contact.UserId);
+            return View(existContact);
         }
 
         // POST: Contacts/Edit/5
@@ -114,9 +131,9 @@ namespace test.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, EditContactViewMoodel inputContact)
+        public async Task<IActionResult> Edit(int id, EditViewModel input)
         {
-            if (id != inputContact.ContactId)
+            if (id != input.ContactId)
             {
                 return NotFound();
             }
@@ -124,22 +141,23 @@ namespace test.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
-                Contact newContact = new Contact
+                Contact new_contact = new()
                 {
-                    ContactId = inputContact.ContactId,
-                    ContactFirstName = inputContact.ContactFirstName,
-                    ContactLastName = inputContact.ContactLastName,
-                    ContactAdress = inputContact.ContactAdress,
-                    UserId = user?.Id
+                    ContactFirstName = input.ContactName,
+                    //ContactNumber = input.ContactNumber,
+                    //PhoneTypeId = input.SelectedTypeId,
+                    UserId = user?.Id,
+                    ContactId = input.ContactId
                 };
+                    //U
                 try
                 {
-                    _context.Update(newContact);
+                    _context.Update(new_contact);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContactExists(newContact.ContactId))
+                    if (!ContactExists(new_contact.ContactId))
                     {
                         return NotFound();
                     }
@@ -150,7 +168,9 @@ namespace test.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(inputContact);
+            //ViewData["PhoneTypeId"] = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeId", contact.PhoneTypeId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", contact.UserId);
+            return View(input);
         }
 
         // GET: Contacts/Delete/5
@@ -162,6 +182,7 @@ namespace test.Controllers
             }
 
             var contact = await _context.Contacts
+                //.Include(c => c.PhoneType)
                 .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.ContactId == id);
             if (contact == null)
