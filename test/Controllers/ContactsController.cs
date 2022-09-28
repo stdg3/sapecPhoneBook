@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -107,9 +108,22 @@ namespace test.Controllers
             {
                 return NotFound();
             }
-            ViewData["PhoneTypeId"] = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeId", contact.PhoneTypeId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", contact.UserId);
-            return View(contact);
+            var myList = _context.PhoneTypes.ToList();
+            var existContact = new EditViewModel 
+            {
+                ContactId = contact.ContactId,
+                ContactName = contact.ContactName,
+                ContactNumber = contact.ContactNumber,
+                SelectedTypeId = contact.PhoneTypeId,
+                PhoneTypesSelectedList = new List<SelectListItem>()
+            };
+            foreach (var item in myList) 
+            {
+                existContact.PhoneTypesSelectedList.Add(new SelectListItem { Text = item.PhoneTypeName, Value = item.PhoneTypeId.ToString()});
+            }
+            //ViewData["PhoneTypeId"] = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeId", contact.PhoneTypeId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", contact.UserId);
+            return View(existContact);
         }
 
         // POST: Contacts/Edit/5
@@ -117,23 +131,33 @@ namespace test.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContactId,ContactName,ContactNumber,UserId,PhoneTypeId")] Contact contact)
+        public async Task<IActionResult> Edit(int id, EditViewModel input)
         {
-            if (id != contact.ContactId)
+            if (id != input.ContactId)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                Contact new_contact = new()
+                {
+                    ContactName = input.ContactName,
+                    ContactNumber = input.ContactNumber,
+                    PhoneTypeId = input.SelectedTypeId,
+                    UserId = user?.Id,
+                    ContactId = input.ContactId
+                };
+                    //U
                 try
                 {
-                    _context.Update(contact);
+                    _context.Update(new_contact);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContactExists(contact.ContactId))
+                    if (!ContactExists(new_contact.ContactId))
                     {
                         return NotFound();
                     }
@@ -144,9 +168,9 @@ namespace test.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PhoneTypeId"] = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeId", contact.PhoneTypeId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", contact.UserId);
-            return View(contact);
+            //ViewData["PhoneTypeId"] = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeId", contact.PhoneTypeId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", contact.UserId);
+            return View(input);
         }
 
         // GET: Contacts/Delete/5
