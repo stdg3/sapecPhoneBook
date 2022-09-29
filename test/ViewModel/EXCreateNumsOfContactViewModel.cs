@@ -2,7 +2,7 @@
 
 namespace test.ViewModel
 {
-    public class CreateNumsOfContactViewModel
+    public class EXCreateNumsOfContactViewModel
     {
         public string NumsOfContactNumber { get; set; }
         public int SelectedTypeId { get; set; }

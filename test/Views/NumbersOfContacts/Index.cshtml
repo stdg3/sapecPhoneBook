@@ -18,6 +18,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneType)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contact)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -30,6 +36,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneType.PhoneTypeName)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contact.ContactFirstName)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contact.ContactLastName)
+                </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.NumbersOfContactId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.NumbersOfContactId">Details</a> |

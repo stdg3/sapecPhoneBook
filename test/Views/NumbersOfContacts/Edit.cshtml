@@ -1,4 +1,4 @@
-﻿@model test.Models.NumbersOfContact
+﻿@model test.ViewModel.EditNumOfContViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -20,9 +20,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="PhoneTypeId" class="control-label"></label>
-                <select asp-for="PhoneTypeId" class="form-control" asp-items="ViewBag.PhoneTypeId"></select>
+                <select asp-for="PhoneTypeId" class="form-control" asp-items="@Model.PhoneTypesList"></select>
                 <span asp-validation-for="PhoneTypeId" class="text-danger"></span>
             </div>
+           @* <div class="form-group">
+                <label asp-for="ContactId" class="control-label"></label>
+                <select asp-for="ContactId" class="form-control" asp-items="ViewBag.ContactId"></select>
+                <span asp-validation-for="ContactId" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
