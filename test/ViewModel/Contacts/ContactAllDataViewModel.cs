@@ -11,14 +11,15 @@ namespace test.ViewModel.Contacts
         //public ApplicationUser User { get; set; } = default!;
         //public string UserId { get; set; } = default!;
         //public int NumbersOfContactId { get; set; }
-        public ICollection<NumbersOfContact> NumbersOfContacts { get; set; }
-        // from NumsOfContactModel
+
+        public List<NumbersOfContact> NumbersOfContacts { get; set; } = new List<NumbersOfContact>();
+        //from NumsOfContactModel
         public int NumbersOfContactId { get; set; }
         public string? NumbersOfContactNumber { get; set; }
         public int PhoneTypeId { get; set; }
         public PhoneType PhoneType { get; set; } = default!;
-        //public ICollection<PhoneType >PhoneTypes { get; set; }
+        //public ICollection<PhoneType> PhoneTypes { get; set; }
         //public int ContactId { get; set; }
-        //public Contact Contact { get; set; } = default!;
+        public Contact Contact { get; set; } = default!;
     }
 }

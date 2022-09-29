@@ -89,7 +89,8 @@ namespace test.Controllers
                 };
                 _context.Add(newNumOfCon);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToRoute(nameof(ContactsController) + nameof(ContactsController.Details), new { id = inputNumbersOfContact.ContactId});
+                return RedirectToAction("Details", "Contacts", new { id = inputNumbersOfContact.ContactId });
             }
             //ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "ContactId", numbersOfContact.ContactId);
             //ViewData["PhoneTypeId"] = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeId", numbersOfContact.PhoneTypeId);
@@ -113,7 +114,7 @@ namespace test.Controllers
             var model = new EditNumOfContViewModel();
             model.NumbersOfContactId = (int)id;
             model.NumbersOfContactNumber = numbersOfContact.NumbersOfContactNumber;
-            //model.ContactId = numbersOfContact.ContactId;
+            model.ContactId = numbersOfContact.ContactId;
             model.PhoneTypeId = (int)numbersOfContact.PhoneTypeId;
             model.PhoneTypesList = new List<SelectListItem>();
             foreach (var item in applicationDbContext)
@@ -162,7 +163,7 @@ namespace test.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Contacts", new { id = inputNumbersOfContact.ContactId });
             }
             //ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "ContactId", numbersOfContact.ContactId);
             //ViewData["PhoneTypeId"] = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeId", numbersOfContact.PhoneTypeId);
@@ -205,7 +206,7 @@ namespace test.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Contacts", new { id = numbersOfContact.ContactId });
         }
 
         private bool NumbersOfContactExists(int id)

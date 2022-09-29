@@ -1,13 +1,11 @@
-﻿@model test.Models.Contact
+﻿@model test.ViewModel.Contacts.ContactAllDataViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
 <h1>Details</h1>
-<p>
-    <a class="btn btn-success" asp-controller="NumbersOfContacts" asp-action="Create" asp-route-id="@Model.ContactId">Add Number</a>
-</p>
+
 <div>
     <h4>Contact</h4>
     <hr />
@@ -36,4 +34,38 @@
     <a class="btn btn-primary" asp-action="Index">Back to List</a>
     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.ContactId">Edit</a>
     <a class="btn btn-danger"  asp-action="Delete" asp-route-id="@Model?.ContactId">Delete</a>
+    <a class="btn btn-success" asp-controller="NumbersOfContacts" asp-action="Create" asp-route-id="@Model.ContactId">Add Number</a>
 </div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumbersOfContacts)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.NumbersOfContacts)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumbersOfContactNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneType.PhoneTypeName)
+                </td>
+                <td >
+                        <a class="btn btn-danger float-end" asp-controller="NumbersOfContacts" asp-action="Delete" asp-route-id="@item.NumbersOfContactId">Delete</a>
+                    <a class="btn btn-warning float-end " asp-controller="NumbersOfContacts" asp-action="Edit" asp-route-id="@item.NumbersOfContactId">Edit</a>
+                   @* <a asp-controller="NumbersOfContacts" asp-action="Details" asp-route-id="@item.NumbersOfContactId">Details</a> |*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

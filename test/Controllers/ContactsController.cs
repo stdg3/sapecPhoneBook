@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using test.Data;
 using test.Models;
 using test.ViewModel;
+using test.ViewModel.Contacts;
 
 namespace test.Controllers
 {
+    [Authorize]
     public class ContactsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,7 +29,10 @@ namespace test.Controllers
         // GET: Contacts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Contacts.Include(c => c.User);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var applicationDbContext = _context.Contacts
+                .Include(c => c.User)
+                .Where(c => c.User.Id==user.Id);
             //ListContactViewMoodel existContact = new ListContactViewMoodel
             //{
             //    ContactId = 
@@ -45,12 +51,29 @@ namespace test.Controllers
             var contact = await _context.Contacts
                 .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.ContactId == id);
+           
             if (contact == null)
             {
                 return NotFound();
             }
+            ContactAllDataViewModel newModel = new ContactAllDataViewModel
+            {
+                ContactId = contact.ContactId,
+                ContactFirstName = contact.ContactFirstName,
+                ContactLastName = contact.ContactLastName,
+                ContactAdress = contact.ContactAdress,
+            };
+            //var numbersOfContact = await _context.NumbersOfNumbers
+            //    .Include(n => n.Contact)
+            //    .Include(n => n.PhoneType)
+            //    .Where(n => n.ContactId == incomeContactID)
+            //    .FirstOrDefaultAsync(m => m.NumbersOfContactId == incomeContactID);
+            newModel.NumbersOfContacts = await _context.NumbersOfNumbers
+                .Include(c => c.PhoneType)
+                .Where(c => c.ContactId == id)
+                .ToListAsync();
 
-            return View(contact);
+            return View(newModel);
         }
 
         // GET: Contacts/Create
@@ -81,6 +104,7 @@ namespace test.Controllers
                 };
                 _context.Add(newContact);
                 await _context.SaveChangesAsync();
+                //var ssssssss = newContact.ContactId;
                 return RedirectToAction(nameof(Index));
             }
             return View(inputContact);
@@ -148,7 +172,7 @@ namespace test.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Contacts", new { id = inputContact.ContactId });
             }
             return View(inputContact);
         }
