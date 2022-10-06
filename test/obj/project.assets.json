@@ -10233,9 +10233,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\avelicoglo\\Desktop\\internProjects\\asp6Denemeler\\test\\test\\test.csproj",
-      "projectName": "test",
-      "projectPath": "C:\\Users\\avelicoglo\\Desktop\\internProjects\\asp6Denemeler\\test\\test\\test.csproj",
+      "projectUniqueName": "C:\\Users\\avelicoglo\\Desktop\\internProjects\\asp6Denemeler\\test\\test\\finalRelize.csproj",
+      "projectName": "finalRelize",
+      "projectPath": "C:\\Users\\avelicoglo\\Desktop\\internProjects\\asp6Denemeler\\test\\test\\finalRelize.csproj",
       "packagesPath": "C:\\Users\\avelicoglo\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\avelicoglo\\Desktop\\internProjects\\asp6Denemeler\\test\\test\\obj\\",
       "projectStyle": "PackageReference",

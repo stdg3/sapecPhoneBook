@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MilmRauOnICem9kHcPBbC0ueplhvJzsuyVQEyrjxgpGSCBZpzPwX/XFn6ist5SxTCW6V3u6eS/j9ccDbWKVz6w==",
+  "dgSpecHash": "hTLeH4Okl5FWHWbI/1x47Zk7t8XPxvq/EEuAUa6S+BOZsPnvnCrhjXSmzm2bkpsaONSQsn27aOknWR5F7zF5eQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\avelicoglo\\Desktop\\internProjects\\asp6Denemeler\\test\\test\\test.csproj",
+  "projectFilePath": "C:\\Users\\avelicoglo\\Desktop\\internProjects\\asp6Denemeler\\test\\test\\finalRelize.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\avelicoglo\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\avelicoglo\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
