@@ -1,0 +1,38 @@
+﻿@model ContactDetailsPartialViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Contact</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ContactFirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContactFirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ContactLastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContactLastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ContactAdress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContactAdress)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-primary" asp-controller="Contacts" asp-action="Index">Back to List</a>
+    <a class="btn btn-warning" asp-controller="Contacts" asp-action="Edit" asp-route-id="@Model?.ContactId">Edit</a>
+    <a class="btn btn-danger" asp-controller="Contacts" asp-action="Delete" asp-route-id="@Model?.ContactId">Delete</a>
+    <a class="btn btn-success" asp-controller="NumbersOfContacts" asp-action="Create" asp-route-id="@Model?.ContactId">Add Number</a>
+</div>

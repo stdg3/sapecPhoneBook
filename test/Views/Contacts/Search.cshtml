@@ -1,0 +1,26 @@
+﻿@*@model test.ViewModel.CreateContactViewModel*@
+
+@{
+    ViewData["Title"] = "Search";
+    
+}
+
+<h1>Search</h1>
+
+<h4>Search Contact</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Search">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">@ViewBag.SearchQuery</label>
+                <input class="form-control" />
+            </div>
+            <div class="form-group">
+                <a class="btn btn-primary" asp-action="Index">Back to List</a>
+                <input type="submit" value="Search" class="btn btn-info" />
+            </div>
+        </form>
+    </div>
+</div>

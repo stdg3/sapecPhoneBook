@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using test.Data;
 using test.Models;
 using test.ViewModel;
+using test.ViewModel.Contacts;
 
 namespace test.Controllers
 {
@@ -89,11 +90,8 @@ namespace test.Controllers
                 };
                 _context.Add(newNumOfCon);
                 await _context.SaveChangesAsync();
-                //return RedirectToRoute(nameof(ContactsController) + nameof(ContactsController.Details), new { id = inputNumbersOfContact.ContactId});
                 return RedirectToAction("Details", "Contacts", new { id = inputNumbersOfContact.ContactId });
             }
-            //ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "ContactId", numbersOfContact.ContactId);
-            //ViewData["PhoneTypeId"] = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeId", numbersOfContact.PhoneTypeId);
             return View(inputNumbersOfContact);
         }
 
@@ -110,17 +108,28 @@ namespace test.Controllers
             {
                 return NotFound();
             }
+            var contact = await _context.Contacts.FindAsync(numbersOfContact.ContactId);
             var applicationDbContext = _context.PhoneTypes.ToList();
+
             var model = new EditNumOfContViewModel();
+            ContactDetailsPartialViewModel contactPartial = new ContactDetailsPartialViewModel
+            {
+                ContactId = contact.ContactId,
+                ContactFirstName = contact.ContactFirstName,
+                ContactLastName = contact.ContactLastName,
+                ContactAdress = contact.ContactAdress,
+            };
             model.NumbersOfContactId = (int)id;
             model.NumbersOfContactNumber = numbersOfContact.NumbersOfContactNumber;
-            model.ContactId = numbersOfContact.ContactId;
+            //model.ContactId = numbersOfContact.ContactId;
+            model.ContactPartial = contactPartial;
             model.PhoneTypeId = (int)numbersOfContact.PhoneTypeId;
-            model.PhoneTypesList = new List<SelectListItem>();
-            foreach (var item in applicationDbContext)
-            {
-                model.PhoneTypesList.Add(new SelectListItem { Text = item.PhoneTypeName, Value = item.PhoneTypeId.ToString() });
-            }
+            //model.PhoneTypesList = new List<SelectListItem>();
+            //foreach (var item in applicationDbContext)
+            //{
+            //    model.PhoneTypesList.Add(new SelectListItem { Text = item.PhoneTypeName, Value = item.PhoneTypeId.ToString() });
+            //}
+            ViewBag.PhoneTypesList = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeName");
             return View(model);
         }
 
@@ -142,7 +151,7 @@ namespace test.Controllers
                 NumbersOfContact newNumOfConModel = new NumbersOfContact
                 {
                     NumbersOfContactId = inputNumbersOfContact.NumbersOfContactId,
-                    ContactId = inputNumbersOfContact.ContactId,
+                    ContactId = inputNumbersOfContact.ContactPartial.ContactId,
                     NumbersOfContactNumber = inputNumbersOfContact.NumbersOfContactNumber,
                     PhoneTypeId = inputNumbersOfContact.PhoneTypeId
 
@@ -163,10 +172,11 @@ namespace test.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", "Contacts", new { id = inputNumbersOfContact.ContactId });
+                return RedirectToAction("Details", "Contacts", new { id = inputNumbersOfContact.ContactPartial.ContactId });
             }
             //ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "ContactId", numbersOfContact.ContactId);
-            //ViewData["PhoneTypeId"] = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeId", numbersOfContact.PhoneTypeId);
+            //ViewBag.PhoneTypesList = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeName");
+            //ViewBag.PhoneTypesList = new SelectList(_context.PhoneTypes, "PhoneTypeId", "PhoneTypeName");
             return View(inputNumbersOfContact);
         }
 

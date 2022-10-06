@@ -1,11 +1,11 @@
-﻿@model test.ViewModel.EditNumOfContViewModel
+﻿@model EditNumOfContViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 
 <h1>Edit</h1>
-
+<partial name="_ContactPartial" model="@Model.ContactPartial" />
 <h4>NumbersOfContact</h4>
 <hr />
 <div class="row">
@@ -13,24 +13,24 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="NumbersOfContactId" />
-            <input type="hidden" asp-for="@Model.ContactId" />
+            <input type="hidden" asp-for="@Model.ContactPartial.ContactId" />
             <div class="form-group">
                 <label asp-for="NumbersOfContactNumber" class="control-label"></label>
                 <input asp-for="NumbersOfContactNumber" class="form-control" />
                 <span asp-validation-for="NumbersOfContactNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="PhoneTypeId" class="control-label"></label>
                 <select asp-for="PhoneTypeId" class="form-control" asp-items="@Model.PhoneTypesList"></select>
                 <span asp-validation-for="PhoneTypeId" class="text-danger"></span>
-            </div>
-           @* <div class="form-group">
-                <label asp-for="ContactId" class="control-label"></label>
-                <select asp-for="ContactId" class="form-control" asp-items="ViewBag.ContactId"></select>
-                <span asp-validation-for="ContactId" class="text-danger"></span>
             </div>*@
             <div class="form-group">
-                <a class="btn btn-primary" asp-controller="Contacts" asp-action="Details" asp-route-id="@Model.ContactId">Back to List</a>
+                <label asp-for="PhoneTypeId" class="control-label"></label>
+                <select asp-for="PhoneTypeId" class="form-control" asp-items="ViewBag.PhoneTypesList"></select>
+                <span asp-validation-for="PhoneTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-primary" asp-controller="Contacts" asp-action="Details" asp-route-id="@Model.ContactPartial.ContactId">Back to List</a>
                 <input type="submit" value="Save" class="btn btn-success" />
                 
             </div>

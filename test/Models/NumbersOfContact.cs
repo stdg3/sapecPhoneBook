@@ -1,4 +1,7 @@
-﻿namespace test.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+
+namespace test.Models
 {
     public class NumbersOfContact
     {
